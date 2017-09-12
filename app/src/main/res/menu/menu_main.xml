@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_item_check_permissions" android:title="Check permissons"/>
+    <item android:id="@+id/menu_item_reindex" android:title="Reindex and save"/>
+    <item android:id="@+id/menu_item_add_all" android:title="Add all to playlist"/>
+</menu>

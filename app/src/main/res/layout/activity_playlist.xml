@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wr.musicorganizer.PlaylistActivity">
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Library" />
+
+    <Button
+        android:id="@+id/button_play_lib_all_random"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-4dp"
+        android:text="All random" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-4dp"
+        android:enabled="false"
+        android:text="Least listened" />
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Unsorted" />
+
+    <Button
+        android:id="@+id/button_play_unsorted_all_random"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-4dp"
+        android:text="All random" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-4dp"
+        android:enabled="false"
+        android:text="Grouped by album" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-4dp"
+        android:enabled="false"
+        android:text="Recently added" />
+
+</LinearLayout>
