@@ -1,4 +1,4 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.core
 
 import android.content.Context
 import com.google.gson.Gson

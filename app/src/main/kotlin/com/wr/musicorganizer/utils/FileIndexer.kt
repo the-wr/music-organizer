@@ -1,9 +1,8 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.utils
 
 import android.content.Context
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
-import io.reactivex.Single
 import java.io.File
 
 

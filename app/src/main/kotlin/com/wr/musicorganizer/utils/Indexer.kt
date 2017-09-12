@@ -1,7 +1,8 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.utils
 
 import android.content.Context
 import android.media.MediaMetadataRetriever
+import com.wr.musicorganizer.core.Song
 import io.reactivex.Observable
 
 

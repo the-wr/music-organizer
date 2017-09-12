@@ -1,4 +1,4 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.utils
 
 import io.reactivex.Completable
 import io.reactivex.Observable

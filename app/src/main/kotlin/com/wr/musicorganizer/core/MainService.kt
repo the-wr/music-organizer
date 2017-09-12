@@ -1,4 +1,4 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.core
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -10,6 +10,10 @@ import android.media.MediaPlayer
 import android.os.Binder
 import android.os.IBinder
 import android.widget.Toast
+import com.wr.musicorganizer.*
+import com.wr.musicorganizer.ui.MainActivity
+import com.wr.musicorganizer.utils.Indexer
+import com.wr.musicorganizer.utils.doInBackground
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -159,8 +163,10 @@ class MainService : Service(), IPlayerService {
     }
 
     override fun play() {
-        if (playlist == null) return
-        if (currentTrackIndex >= playlist!!.size) return
+        if (playlist == null || currentTrackIndex >= playlist!!.size) {
+            trackDetails.onNext(TrackDetails(Song("", 0, null, null, null, null), 0, 0))
+            return
+        }
 
         val track = playlist!![currentTrackIndex]
 

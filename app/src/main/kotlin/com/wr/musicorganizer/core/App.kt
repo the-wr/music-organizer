@@ -1,4 +1,4 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.core
 
 import android.app.Application
 import android.content.ContextWrapper

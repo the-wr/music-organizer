@@ -1,10 +1,12 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.ui
 
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
+import com.wr.musicorganizer.core.IPlayerService
+import com.wr.musicorganizer.core.MainService
 
 
 @SuppressLint("Registered")

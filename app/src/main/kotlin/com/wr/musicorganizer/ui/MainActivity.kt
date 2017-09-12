@@ -1,4 +1,4 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.ui
 
 import android.Manifest
 import android.content.ComponentName
@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.wr.musicorganizer.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -79,7 +80,7 @@ class MainActivity : PlayerServiceAttachedActivity() {
         detailsSubscription = service!!.trackDetails.subscribe {
             textview_track_artist.text = if (it.track.artist.isNullOrEmpty()) "" else it.track.artist
             textview_track_name.text = if (it.track.artist.isNullOrEmpty()) it.track.fileName else it.track.title
-            textview_track_count.text = "${it.trackNumber} / ${it.trackCount}"
+            textview_track_count.text = "${it.trackNumber + 1} / ${it.trackCount}"
         }
 
         reindexSubscription = service!!.reindexObservable

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wr.musicorganizer.MainActivity">
+    tools:context="com.wr.musicorganizer.ui.MainActivity">
 
     <Button
         android:id="@+id/button_playlist"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         tools:text="Asaf Avidan &amp; The Mojos" />
 
     <TextView
@@ -42,6 +42,47 @@
         android:layout_alignStart="@id/textview_track_name"
         android:layout_marginEnd="16dp"
         tools:text="145 / 999" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_score_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/seekbar_progress"
+        android:layout_below="@id/textview_track_count"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp">
+
+        <Button
+
+            android:id="@+id/button_keep"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="#7d7"
+            android:text="Keep"
+            app:layout_constraintBottom_toTopOf="@id/button_discard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintVertical_weight="3" />
+
+        <Button
+            android:id="@+id/button_discard"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="#f99"
+            android:text="Discard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_keep"
+            app:layout_constraintVertical_weight="2" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <SeekBar
         android:id="@+id/seekbar_progress"

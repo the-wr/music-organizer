@@ -1,9 +1,12 @@
-package com.wr.musicorganizer
+package com.wr.musicorganizer.ui
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.pixplicity.easyprefs.library.Prefs
+import com.wr.musicorganizer.core.App
+import com.wr.musicorganizer.R
+import com.wr.musicorganizer.core.Song
 import kotlinx.android.synthetic.main.activity_playlist.*
 import java.util.*
 
