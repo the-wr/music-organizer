@@ -2,12 +2,12 @@ package com.wr.musicorganizer.utils
 
 import android.content.Context
 import android.media.MediaMetadataRetriever
-import com.wr.musicorganizer.core.Song
+import com.wr.musicorganizer.core.Track
 import io.reactivex.Observable
 
 
 object Indexer {
-    fun reindexMusic(context: Context, folder: String): Observable<Song> =
+    fun reindexMusic(context: Context, folder: String): Observable<Track> =
         FileIndexer.indexFiles(context, folder)
                 .filter { it.endsWith(".mp3") }
                 .map {
@@ -28,9 +28,9 @@ object Indexer {
                         } catch (t: Throwable) {
                         }
 
-                        Song(it, 0, artist, title, album, if (trackNumber >= 0) trackNumber else null)
+                        Track(it, 0, artist, title, album, if (trackNumber >= 0) trackNumber else null)
                     } catch (t: Throwable) {
-                        Song(it, 0, null, null, null, null)
+                        Track(it, 0, null, null, null, null)
                     } finally {
                     }
                 }

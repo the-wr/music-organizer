@@ -24,11 +24,11 @@ import java.util.concurrent.TimeUnit
 
 
 data class PlaybackProgress(val secondsPlayed: Int, val secondsTotal: Int)
-data class TrackDetails(val track: Song, val trackNumber: Int, val trackCount: Int)
+data class TrackDetails(val track: Track, val trackNumber: Int, val trackCount: Int)
 
 interface IPlayerService {
     fun reindex(folder: String)
-    fun setPlaylist(songs: List<Song>)
+    fun setPlaylist(tracks: List<Track>)
 
     fun play()
     fun stop()
@@ -37,6 +37,9 @@ interface IPlayerService {
 
     fun nextTrack()
     fun prevTrack()
+
+    fun keepCurrentTrack()
+    fun discardCurrentTrack()
 
     val progress: Observable<PlaybackProgress>
     val trackDetails: Observable<TrackDetails>
@@ -52,14 +55,18 @@ class MainService : Service(), IPlayerService {
 
     companion object {
         const val NOTIFICATION_ID = 1
-        fun intent(context:Context) = Intent(context, MainService::class.java)
+        fun intent(context: Context) = Intent(context, MainService::class.java)
     }
 
     private val mediaPlayer: MediaPlayer = MediaPlayer()
     private val timer = Observable.interval(500, TimeUnit.MILLISECONDS)
     private var shutdownSubscription: Disposable? = null
 
-    private var playlist: List<Song>? = null
+    private var needToSaveLibrary: Boolean = false
+    private var librarySaveInProgress: Boolean = false
+
+    private var playlist: List<Track>? = null
+    private var currentTrack: Track? = null
     private var currentTrackIndex: Int = 0
 
     override var library: Library = Library()
@@ -145,30 +152,26 @@ class MainService : Service(), IPlayerService {
                     Toast.makeText(this, "Reindex done: ${it.count()}", Toast.LENGTH_LONG).show()
 
                     library = Library().apply { songs = it }
-                    Library.save(this, library)
-                            .doInBackground()
-                            .subscribe({
-                                Toast.makeText(this, "Save success", Toast.LENGTH_LONG).show()
-                            }, {
-                                Toast.makeText(this, "Save error!", Toast.LENGTH_LONG).show()
-                            })
+                    saveLibrary()
                 }, {
                     Toast.makeText(this, "Reindex error!", Toast.LENGTH_LONG).show()
                 })
     }
 
-    override fun setPlaylist(songs: List<Song>) {
-        playlist = songs
+    override fun setPlaylist(tracks: List<Track>) {
+        playlist = tracks
         currentTrackIndex = 0
     }
 
     override fun play() {
         if (playlist == null || currentTrackIndex >= playlist!!.size) {
-            trackDetails.onNext(TrackDetails(Song("", 0, null, null, null, null), 0, 0))
+            currentTrack = null
+            trackDetails.onNext(TrackDetails(Track("", 0, null, null, null, null), 0, 0))
             return
         }
 
         val track = playlist!![currentTrackIndex]
+        currentTrack = track
 
         mediaPlayer.reset()
         mediaPlayer.setDataSource(track.fileName)
@@ -207,5 +210,45 @@ class MainService : Service(), IPlayerService {
         }
     }
 
+    override fun keepCurrentTrack() {
+        val track = currentTrack ?: return
+
+        track.score += 2
+        saveLibrary()
+    }
+
+    override fun discardCurrentTrack() {
+        val track = currentTrack ?: return
+
+        track.score--
+        saveLibrary()
+        nextTrack()
+    }
+
     // -----
+
+    private fun saveLibrary() {
+        if (librarySaveInProgress) {
+            needToSaveLibrary = true
+            return
+        }
+
+        librarySaveInProgress = true
+        Library.save(this, library)
+                .doInBackground()
+                .doAfterTerminate {
+                    librarySaveInProgress = false
+                    if (needToSaveLibrary) {
+                        needToSaveLibrary = false
+                        saveLibrary()
+                    }
+                }
+                .subscribe(
+                        {
+                            Toast.makeText(this, "Library saved.", Toast.LENGTH_LONG).show()
+                        },
+                        {
+                            Toast.makeText(this, "Error saving library: ${it.message}", Toast.LENGTH_LONG).show()
+                        })
+    }
 }

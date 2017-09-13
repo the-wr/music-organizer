@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.pixplicity.easyprefs.library.Prefs
 import com.wr.musicorganizer.core.App
 import com.wr.musicorganizer.R
-import com.wr.musicorganizer.core.Song
+import com.wr.musicorganizer.core.Track
 import kotlinx.android.synthetic.main.activity_playlist.*
 import java.util.*
 
@@ -31,8 +31,8 @@ class PlaylistActivity : PlayerServiceAttachedActivity() {
         }
     }
 
-    private fun shuffleAndSetPlaylist(tracks: Collection<Song>) {
-        val shuffleList = mutableListOf<Song>()
+    private fun shuffleAndSetPlaylist(tracks: Collection<Track>) {
+        val shuffleList = mutableListOf<Track>()
         shuffleList.addAll(tracks)
 
         val size = shuffleList.size

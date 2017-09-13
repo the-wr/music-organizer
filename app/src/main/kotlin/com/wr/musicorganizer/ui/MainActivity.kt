@@ -44,6 +44,9 @@ class MainActivity : PlayerServiceAttachedActivity() {
         button_prev.setOnClickListener { service!!.prevTrack() }
         button_next.setOnClickListener { service!!.nextTrack() }
         button_playlist.setOnClickListener { startActivity(PlaylistActivity.intent(this)) }
+
+        button_keep.setOnClickListener { service!!.keepCurrentTrack() }
+        button_discard.setOnClickListener { service!!.discardCurrentTrack() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

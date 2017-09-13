@@ -2,16 +2,17 @@ package com.wr.musicorganizer.core
 
 import android.content.Context
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.wr.musicorganizer.utils.FileUtils
 import io.reactivex.Completable
 import io.reactivex.Single
+import java.io.File
 import java.io.InputStreamReader
 
 
-data class Song(val fileName: String, var score: Int,
-                val artist: String?, val title: String?, val album: String?, val trackNumber: Int?)
+data class Track(val fileName: String, var score: Int,
+                 val artist: String?, val title: String?, val album: String?, val trackNumber: Int?)
 
-data class SongsWrapper(val songs: List<Song>)
+data class SongsWrapper(val tracks: List<Track>)
 
 class Library {
     companion object {
@@ -21,28 +22,28 @@ class Library {
             try {
                 val stream = context.openFileInput(LIBRARY_FILE_NAME)
                 val songsWrapper = Gson().fromJson(InputStreamReader(stream), SongsWrapper::class.java)
-
-                it.onSuccess(Library().also { it.songs = songsWrapper.songs.toMutableList() })
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
-
-        fun save(context: Context, library: Library) = Completable.create {
-            try {
-                val gson = GsonBuilder().setPrettyPrinting().create()
-                val json = gson.toJson(SongsWrapper(library.songs))
-
-                val stream = context.openFileOutput(LIBRARY_FILE_NAME, Context.MODE_PRIVATE)
-                stream.write(json.toByteArray())
                 stream.close()
 
-                it.onComplete()
+                it.onSuccess(Library().also { it.songs = songsWrapper.tracks.toMutableList() })
             } catch (e: Throwable) {
                 it.onError(e)
             }
         }
+
+        fun save(context: Context, library: Library) =
+                FileUtils.save(context, SongsWrapper(library.songs), LIBRARY_FILE_NAME)
+                        /*
+                        .andThen {
+                            //Completable.create {
+                                try {
+                                    FileUtils.copy(File(context.filesDir, LIBRARY_FILE_NAME), File("/storage/0000-0000/library.json"))
+                                } catch (e: Throwable) {
+                                    val a = 1
+                                }
+                                it.onComplete()
+                            //}
+                        }*/
     }
 
-    var songs = mutableListOf<Song>()
+    var songs = mutableListOf<Track>()
 }
